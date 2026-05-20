@@ -45,52 +45,6 @@ struct Proyek {
     int kuotaTerisi;
 };
 
-//MATCHMAKING dan DASHBOARD
-
-//inti dari program, memasangkan relawan dengan proyek yang sesuai dibuat oleh Aliyyah
-void jalankan_matchmaking(struct Proyek *daftarProyek, int jmlProyek, struct Relawan *daftarRelawan, int jmlRelawan) {
-    printf("\n==================================================\n");
-    printf("     SYSTEM ADM: PROSES MATCHMAKING OTOMATIS\n");
-    printf("==================================================\n");
-
-    urutkan_relawan_prioritas(daftarRelawan, jmlRelawan);
-    printf("[INFO] Database relawan telah diurutkan berdasarkan prioritas Jam Terbang tertinggi.\n\n");
-
-// Menampilkan dashboard status dibuat oleh Aliyyah
-void tampilkan_dashboard(struct Proyek *daftarProyek, int jmlProyek, struct Relawan *daftarRelawan, int jmlRelawan) {
-    printf("\n==================================================\n");
-    printf("          DASHBOARD KEMITRAAN CAPAIAN SDG 17       \n");
-    printf("==================================================\n");
-    
-    printf("\n[STATUS PROYEK SOSIAL MITRA]\n");
-    printf("%-7s | %-25s | %-9s | %-12s\n", "ID", "Nama Proyek", "Kuota", "Status");
-    printf("------------------------------------------------------------\n");
-    for (int p = 0; p < jmlProyek; p++) {
-        printf("%-7d | %-25s | %d/%-7d | %s\n", 
-                daftarProyek[p].idProyek, daftarProyek[p].namaProyek, 
-                daftarProyek[p].kuotaTerisi, daftarProyek[p].kuotaMaksimal,
-                (daftarProyek[p].kuotaTerisi == daftarProyek[p].kuotaMaksimal) ? "SIAP JALAN" : "BUTUH MITRA");
-    }
-
-    printf("\n[DATABASE PORTOFOLIO RELAWAN]\n");
-    printf("%-15s | %-18s | %-15s | %-15s\n", "ID", "Nama Relawan", "Jam Terbang", "Status Kerja");
-    printf("---------------------------------------------------------------------------\n");
-    for (int r = 0; r < jmlRelawan; r++) {
-        struct Relawan *v = daftarRelawan + r;
-        printf("%-15d | %-18s | %-11d jam | %s\n", 
-                v->idRelawan, v->nama, v->jamTerlibat, 
-                (v->isBusy == 1) ? "AKTIF LAPANGAN" : "STANDBY (FREE)");
-    }
-    printf("==================================================\n");
-}
-
-
-
-
-
-
-
-
 // SORTING & POINTERS dibuat oleh Farras
 
 // Selection Sort, mengurutkan relawan berdasarkan jam terbang terbesar
@@ -328,6 +282,47 @@ struct Proyek* tambah_proyek(struct Proyek *daftar, int *jumlah, int *kapasitas)
     (*jumlah)++;
     return daftar;
 }
+
+
+//MATCHMAKING dan DASHBOARD
+
+//inti dari program, memasangkan relawan dengan proyek yang sesuai dibuat oleh Aliyyah
+void jalankan_matchmaking(struct Proyek *daftarProyek, int jmlProyek, struct Relawan *daftarRelawan, int jmlRelawan) {
+    printf("\n==================================================\n");
+    printf("     SYSTEM ADM: PROSES MATCHMAKING OTOMATIS\n");
+    printf("==================================================\n");
+
+    urutkan_relawan_prioritas(daftarRelawan, jmlRelawan);
+    printf("[INFO] Database relawan telah diurutkan berdasarkan prioritas Jam Terbang tertinggi.\n\n");
+
+// Menampilkan dashboard status dibuat oleh Aliyyah
+void tampilkan_dashboard(struct Proyek *daftarProyek, int jmlProyek, struct Relawan *daftarRelawan, int jmlRelawan) {
+    printf("\n==================================================\n");
+    printf("          DASHBOARD KEMITRAAN CAPAIAN SDG 17       \n");
+    printf("==================================================\n");
+    
+    printf("\n[STATUS PROYEK SOSIAL MITRA]\n");
+    printf("%-7s | %-25s | %-9s | %-12s\n", "ID", "Nama Proyek", "Kuota", "Status");
+    printf("------------------------------------------------------------\n");
+    for (int p = 0; p < jmlProyek; p++) {
+        printf("%-7d | %-25s | %d/%-7d | %s\n", 
+                daftarProyek[p].idProyek, daftarProyek[p].namaProyek, 
+                daftarProyek[p].kuotaTerisi, daftarProyek[p].kuotaMaksimal,
+                (daftarProyek[p].kuotaTerisi == daftarProyek[p].kuotaMaksimal) ? "SIAP JALAN" : "BUTUH MITRA");
+    }
+
+    printf("\n[DATABASE PORTOFOLIO RELAWAN]\n");
+    printf("%-15s | %-18s | %-15s | %-15s\n", "ID", "Nama Relawan", "Jam Terbang", "Status Kerja");
+    printf("---------------------------------------------------------------------------\n");
+    for (int r = 0; r < jmlRelawan; r++) {
+        struct Relawan *v = daftarRelawan + r;
+        printf("%-15d | %-18s | %-11d jam | %s\n", 
+                v->idRelawan, v->nama, v->jamTerlibat, 
+                (v->isBusy == 1) ? "AKTIF LAPANGAN" : "STANDBY (FREE)");
+    }
+    printf("==================================================\n");
+}
+
 
 
 int main() {
