@@ -323,35 +323,7 @@ void tampilkan_dashboard(struct Proyek *daftarProyek, int jmlProyek, struct Rela
     printf("==================================================\n");
 }
 
-for (int p = 0; p < jmlProyek; p++) {
-        struct Proyek *prj = &daftarProyek[p];
-        
-        if (prj->kuotaTerisi >= prj->kuotaMaksimal) continue;
 
-        printf("Memproses Proyek [%d] '%s' (Butuh: %s, Min Level: %s)\n", 
-                prj->idProyek, prj->namaProyek, get_skill_name(prj->skillDibutuhkan), get_level_name(prj->levelMinimal));
-
-        for (int r = 0; r < jmlRelawan; r++) {
-            struct Relawan *vln = daftarRelawan + r; 
-            if (vln->isBusy == 1) continue;
-
-            for (int s = 0; s < vln->jumlahSkill; s++) {
-                if (vln->skill[s] == prj->skillDibutuhkan && vln->levelSkill[s] >= prj->levelMinimal) {
-                    vln->isBusy = 1;
-                    vln->jamTerlibat += 24; 
-                    prj->kuotaTerisi++;
-                    printf("  -> MATCH FOUND: '%s' (ID:%d) | Jam Terbang Awal: %d | Skill: [%s]\n", 
-                            vln->nama, vln->idRelawan, vln->jamTerlibat - 24, get_level_name(vln->levelSkill[s]));
-                    break; 
-                }
-            }
-            if (prj->kuotaTerisi >= prj->kuotaMaksimal) break;
-        }
-        if (prj->kuotaTerisi < prj->kuotaMaksimal) {
-            printf("  -> Sisa kuota belum terpenuhi: %d orang\n", prj->kuotaMaksimal - prj->kuotaTerisi);
-        }
-        printf("--------------------------------------------------\n");
-    }
 
 int main() {
     
